@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
-    <title>PrimeKicks | Sua Loja de Tênis</title>
+    <title>Carrinho | PrimeKicks</title>
 </head>
 <body>
     <div class="container">
@@ -27,18 +27,15 @@
         </header>
 
         <main>
-            <section class="hero">
-                <h2>Bem-vindo à PrimeKicks!</h2>
-                <p>Estilo e conforto para os seus pés.</p>
-                <div class="search-container">
-                    <input type="text" id="search-input" placeholder="Busque seu tênis favorito...">
+            <section class="cart-section">
+                <h2 class="section-title">Seu Carrinho</h2>
+                <div id="cart-items" class="cart-items-container">
+                    <!-- Itens do carrinho serão injetados aqui via JS -->
+                    <p>Carregando carrinho...</p>
                 </div>
-            </section>
-
-            <section class="catalog">
-                <h2 class="section-title">Nossos Lançamentos</h2>
-                <div id="product-grid" class="product-grid">
-                    <!-- Os produtos serão injetados aqui via JS -->
+                <div class="cart-summary">
+                    <p>Total: <span id="cart-total">R$ 0,00</span></p>
+                    <button id="checkout-btn" class="add-to-cart-btn">Finalizar Compra</button>
                 </div>
             </section>
         </main>
@@ -46,7 +43,6 @@
         <footer>
             <p>&copy; 2026 PrimeKicks. Todos os direitos reservados.</p>
         </footer>
-
     </div>
     <script src="../script/script.js"></script>
 </body>
