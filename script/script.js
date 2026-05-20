@@ -78,32 +78,43 @@ document.addEventListener('DOMContentLoaded', () => {
     exibirTenis();
     exibirCarrinho();
     atualizarContadorCarrinho();
-});
 
-const searchInput = document.getElementById('search-input');
-if (searchInput) {
-    searchInput.addEventListener('input', function() {
-        const query = this.value.toLowerCase();
-    const filteredTenis = estoqueTenis.filter(tenis => tenis.nome.toLowerCase().includes(query));
-    exibirTenis(filteredTenis);
-    if (filteredTenis.length === 0) {
-        const container = document.getElementById('product-grid');
-        container.innerHTML = '<p>Nenhum tênis encontrado.</p>';
-    }
+    const header = document.querySelector('header');
+    window.addEventListener('scroll', () => {
+        header.classList.toggle('header-scrolled', window.scrollY > 0);
     });
-}
 
-document.getElementById('product-grid')?.addEventListener('click', function(e) {
-    if (e.target.classList.contains('add-to-cart-btn')) {
-        const id = parseInt(e.target.getAttribute('data-id'));
-        const tenis = estoqueTenis.find(t => t.id === id);
-        if (tenis) {
-            carrinho.push(tenis);
-            localStorage.setItem('carrinho', JSON.stringify(carrinho));
-            atualizarContadorCarrinho();
-            exibirCarrinho();
-        }
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const filteredTenis = estoqueTenis.filter(tenis => 
+                tenis.nome.toLowerCase().includes(query) || 
+                tenis.descricao.toLowerCase().includes(query)
+            );
+            exibirTenis(filteredTenis);
+            if (filteredTenis.length === 0) {
+                const container = document.getElementById('product-grid');
+                if (container) container.innerHTML = '<p>Nenhum tênis encontrado.</p>';
+            }
+        });
     }
+
+    document.getElementById('product-grid')?.addEventListener('click', function(e) {
+        if (e.target.classList.contains('add-to-cart-btn')) {
+            const id = parseInt(e.target.getAttribute('data-id'));
+            const tenis = estoqueTenis.find(t => t.id === id);
+            if (tenis) {
+                carrinho.push(tenis);
+                localStorage.setItem('carrinho', JSON.stringify(carrinho));
+                atualizarContadorCarrinho();
+                exibirCarrinho();
+            }
+        }
+    });
+
+    document.getElementById('clear-cart-btn')?.addEventListener('click', limparCarrinho);
+    document.getElementById('checkout-btn')?.addEventListener('click', finalizarCompra);
 });
 
 function limparCarrinho() {
@@ -113,4 +124,16 @@ function limparCarrinho() {
     exibirCarrinho();
 }
 
-document.getElementById('clear-cart-btn')?.addEventListener('click', limparCarrinho);
+function finalizarCompra() {
+    if (carrinho.length === 0) {
+        const container = document.getElementById('cart-items');
+        if (container) container.innerHTML = '<p>Seu carrinho está vazio. Adicione itens para finalizar a compra.</p>';
+        return;
+    }
+
+    carrinho = [];
+    localStorage.removeItem('carrinho');
+    atualizarContadorCarrinho();
+    const container = document.getElementById('cart-items');
+    if (container) container.innerHTML = '<p>Compra finalizada com sucesso! Obrigado por comprar conosco.</p>';
+}

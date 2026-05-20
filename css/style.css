@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -21,7 +23,22 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px 0;
+    width: 100%;
     border-bottom: 2px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+header.header-scrolled {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 8px 20px;
 }
 
 .logo-area {
@@ -30,8 +47,14 @@ header {
     gap: 10px;
 }
 
+.logo-area h1 {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold;
+}
+
 .logo {
-    width: 50px;
+    width: 100px;
     border-radius: 50%;
 }
 
@@ -46,6 +69,7 @@ nav a {
     color: #333;
     font-weight: bold;
     transition: color 0.3s;
+    font-size: 20px;
 }
 
 nav a:hover {
@@ -55,7 +79,7 @@ nav a:hover {
 .hero {
     text-align: center;
     padding: 60px 20px;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../img/hero-bg.jpg'); /* Adicione uma imagem se tiver */
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../img/hero-bg.jpg');
     background-size: cover;
     color: white;
     margin-bottom: 40px;
@@ -141,6 +165,18 @@ nav a:hover {
     transition: background-color 0.3s ease;
 }
 
+.clear-cart-btn {
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
 .cart-section {
     padding: 40px 0;
     min-height: 60vh;
@@ -162,6 +198,10 @@ nav a:hover {
     background-color: #e03a4a;
 }
 
+.clear-cart-btn:hover {
+    background-color: #e03a4a;
+}
+
 .hidden {
     display: none;
 }
@@ -170,4 +210,5 @@ footer {
     text-align: center;
     padding: 40px 0;
     border-top: 1px solid #ddd;
+    gap: 20px;
 }
