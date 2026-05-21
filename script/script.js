@@ -1,3 +1,16 @@
+const cadastroUsuario = [{
+    id: 1,
+    nome: "Joao Silva",
+    email: "joao.silva@example.com",
+    senha: "123456"
+},
+{
+    id: 2,
+    nome: "Maria Oliveira",
+    email: "maria.oliveira@example.com",
+    senha: "654321"
+}];
+
 const estoqueTenis = [{
     id: 1,
     nome: "Tênis Nike Air Max 270",
@@ -26,7 +39,7 @@ function atualizarContadorCarrinho() {
     if (contador) {
         contador.innerText = carrinho.length;
     }
-}
+};
 
 function exibirTenis(lista = estoqueTenis) {
     const container = document.getElementById('product-grid');
@@ -65,14 +78,15 @@ function exibirCarrinho() {
         const div = document.createElement('div');
         div.innerHTML = `
             <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #ddd;">
-                <span>${item.nome}</span>
-                <span>R$ ${item.preco.toFixed(2)}</span>
+                <img src="${item.imagem}" alt="${item.nome}" style="width:50px; height:25px; object-fit:cover; border-radius:4px; margin-right:10px;">
+                <span style="font-weight:bold;">${item.nome}</span>
+                <span style="font-weight:bold;">R$ ${item.preco.toFixed(2)}</span>
             </div>
         `;
         container.appendChild(div);
     });
     if (totalElement) totalElement.innerText = `R$ ${total.toFixed(2)}`;
-}
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     exibirTenis();
@@ -115,6 +129,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('clear-cart-btn')?.addEventListener('click', limparCarrinho);
     document.getElementById('checkout-btn')?.addEventListener('click', finalizarCompra);
+
+    const formCadastro = document.getElementById('cadastro-form');
+    let cadastroFinalizado = document.getElementById('cadastro-finalizado');
+
+    if (formCadastro) {
+        formCadastro.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!validaCadastro()) return;
+
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            
+            localStorage.setItem('usuarioLogado', JSON.stringify({ nome, email }));
+            
+            if (cadastroFinalizado) {
+                cadastroFinalizado.style.display = 'block';
+                cadastroFinalizado.innerText = `Cadastro realizado com sucesso! Bem-vindo, ${nome}. Redirecionando...`;
+            }
+
+            setTimeout(() => {
+                window.location.href = 'carrinho.html';
+            }, 2000);
+        });
+    }
 });
 
 function limparCarrinho() {
@@ -122,7 +160,66 @@ function limparCarrinho() {
     localStorage.removeItem('carrinho');
     atualizarContadorCarrinho();
     exibirCarrinho();
+};
+
+function mostrarModalCadastro() {
+    let modal = document.getElementById('modal-cadastro');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'modal-cadastro';
+        modal.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: flex; align-items: center;
+            justify-content: center; z-index: 2000;
+        `;
+
+        modal.innerHTML = `
+            <div style="background: white; padding: 40px; border-radius: 12px; text-align: center; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); font-family: sans-serif;">
+                <h2 style="margin-top: 0; color: #333;">Faça seu Cadastro</h2>
+                <p style="color: #666; line-height: 1.6;">Para finalizar sua compra, por favor, crie uma conta conosco. É rápido e fácil!</p>
+                <button id="btn-cadastrar" style="margin-top: 25px; background: #333; color: white; border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; font-weight: bold;">Cadastrar Agora</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        document.getElementById('btn-cadastrar').addEventListener('click', () => {
+            modal.style.display = 'none';
+            window.location.href = 'cadastro.html';
+        });
+    }
+    modal.style.display = 'flex';
 }
+
+function mostrarModalSucesso() {
+    let modal = document.getElementById('modal-sucesso');
+    
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'modal-sucesso';
+        modal.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); display: flex; align-items: center;
+            justify-content: center; z-index: 2000;
+        `;
+        
+        modal.innerHTML = `
+            <div style="background: white; padding: 40px; border-radius: 12px; text-align: center; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); font-family: sans-serif;">
+                <div style="font-size: 50px; color: #4CAF50; margin-bottom: 20px;">✓</div>
+                <h2 style="margin-top: 0; color: #333;">Compra Realizada!</h2>
+                <p style="color: #666; line-height: 1.6;">Obrigado por escolher a nossa loja. Seu pedido foi processado com sucesso e você receberá uma confirmação em breve.</p>
+                <button id="btn-fechar-modal" style="margin-top: 25px; background: #333; color: white; border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; font-weight: bold;">Continuar Comprando</button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        document.getElementById('btn-fechar-modal').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
+    
+    modal.style.display = 'flex';
+};
 
 function finalizarCompra() {
     if (carrinho.length === 0) {
@@ -131,9 +228,27 @@ function finalizarCompra() {
         return;
     }
 
+    const usuarioLogado = localStorage.getItem('usuarioLogado');
+    if (!usuarioLogado) {
+        mostrarModalCadastro();
+        return;
+    }
+
     carrinho = [];
     localStorage.removeItem('carrinho');
     atualizarContadorCarrinho();
-    const container = document.getElementById('cart-items');
-    if (container) container.innerHTML = '<p>Compra finalizada com sucesso! Obrigado por comprar conosco.</p>';
+    exibirCarrinho();
+    mostrarModalSucesso();
+};
+
+function validaCadastro() {
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const senha = document.getElementById('senha').value.trim();
+
+    if (!nome || !email || !senha) {
+        alert('Por favor, preencha todos os campos.');
+        return false;
+    }
+    return true;
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Cadastro | PrimeKicks</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <img src="../img/logo.jpg" alt="Logo PrimeKicks" class="logo">
+                <h1>PrimeKicks</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#product-grid">Produtos</a></li>
+                    <li class="cart-menu">
+                        <a href="carrinho.html" id="cart-icon">Carrinho (<span id="cart-count">0</span>)</a>
+                    </li>
+                    <li><a href="cadastro.html">Cadastro</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="cart-section">
+                <h2 class="section-title">Crie sua Conta</h2>
+                <div id="cadastro-finalizado" style="display: none; background-color: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin: 0 auto 20px; max-width: 400px; text-align: center; font-weight: bold; border: 1px solid #c3e6cb;"></div>
+                <form id="cadastro-form" class="auth-form" style="max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px;">
+                    <div class="form-group" style="display: flex; flex-direction: column; text-align: left;">
+                        <label for="nome" style="margin-bottom: 5px; font-weight: bold;">Nome Completo</label>
+                        <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required style="padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column; text-align: left;">
+                        <label for="email" style="margin-bottom: 5px; font-weight: bold;">E-mail</label>
+                        <input type="email" id="email" name="email" placeholder="seu@email.com" required style="padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <div class="form-group" style="display: flex; flex-direction: column; text-align: left;">
+                        <label for="senha" style="margin-bottom: 5px; font-weight: bold;">Senha</label>
+                        <input type="password" id="senha" name="senha" placeholder="Sua senha" required style="padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <button type="submit" class="add-to-cart-btn" style="margin-top: 10px;">Cadastrar</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>Contato: contato@primekicks.com</p>
+                <p>Endereço: Rua dos Tênis, 123 - São Paulo, SP</p>
+            </div>
+            <p>&copy; 2026 PrimeKicks. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+    <script src="../script/script.js"></script>
+</body>
+</html>
