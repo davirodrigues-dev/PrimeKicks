@@ -76,12 +76,11 @@ function exibirCarrinho() {
     carrinho.forEach((item) => {
         total += item.preco;
         const div = document.createElement('div');
+        div.className = 'cart-item';
         div.innerHTML = `
-            <div style="display:flex; justify-content:space-between; padding:10px; border-bottom:1px solid #ddd;">
-                <img src="${item.imagem}" alt="${item.nome}" style="width:50px; height:25px; object-fit:cover; border-radius:4px; margin-right:10px;">
-                <span style="font-weight:bold;">${item.nome}</span>
-                <span style="font-weight:bold;">R$ ${item.preco.toFixed(2)}</span>
-            </div>
+            <img src="${item.imagem}" alt="${item.nome}" class="cart-item-img">
+            <span class="cart-item-name">${item.nome}</span>
+            <span class="cart-item-price">R$ ${item.preco.toFixed(2)}</span>
         `;
         container.appendChild(div);
     });
@@ -167,17 +166,13 @@ function mostrarModalCadastro() {
     if (!modal) {
         modal = document.createElement('div');
         modal.id = 'modal-cadastro';
-        modal.style.cssText = `
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); display: flex; align-items: center;
-            justify-content: center; z-index: 2000;
-        `;
+        modal.className = 'modal-overlay';
 
         modal.innerHTML = `
-            <div style="background: white; padding: 40px; border-radius: 12px; text-align: center; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); font-family: sans-serif;">
-                <h2 style="margin-top: 0; color: #333;">Faça seu Cadastro</h2>
-                <p style="color: #666; line-height: 1.6;">Para finalizar sua compra, por favor, crie uma conta conosco. É rápido e fácil!</p>
-                <button id="btn-cadastrar" style="margin-top: 25px; background: #333; color: white; border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; font-weight: bold;">Cadastrar Agora</button>
+            <div class="modal-content">
+                <h2>Faça seu Cadastro</h2>
+                <p>Para finalizar sua compra, por favor, crie uma conta conosco. É rápido e fácil!</p>
+                <button id="btn-cadastrar" class="btn-primary">Cadastrar Agora</button>
             </div>
         `;
         document.body.appendChild(modal);
@@ -196,18 +191,14 @@ function mostrarModalSucesso() {
     if (!modal) {
         modal = document.createElement('div');
         modal.id = 'modal-sucesso';
-        modal.style.cssText = `
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); display: flex; align-items: center;
-            justify-content: center; z-index: 2000;
-        `;
+        modal.className = 'modal-overlay';
         
         modal.innerHTML = `
-            <div style="background: white; padding: 40px; border-radius: 12px; text-align: center; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); font-family: sans-serif;">
-                <div style="font-size: 50px; color: #4CAF50; margin-bottom: 20px;">✓</div>
-                <h2 style="margin-top: 0; color: #333;">Compra Realizada!</h2>
-                <p style="color: #666; line-height: 1.6;">Obrigado por escolher a nossa loja. Seu pedido foi processado com sucesso e você receberá uma confirmação em breve.</p>
-                <button id="btn-fechar-modal" style="margin-top: 25px; background: #333; color: white; border: none; padding: 12px 30px; border-radius: 6px; cursor: pointer; font-weight: bold;">Continuar Comprando</button>
+            <div class="modal-content">
+                <div class="success-icon">✓</div>
+                <h2>Compra Realizada!</h2>
+                <p>Obrigado por escolher a nossa loja. Seu pedido foi processado com sucesso e você receberá uma confirmação em breve.</p>
+                <button id="btn-fechar-modal" class="btn-primary">Continuar Comprando</button>
             </div>
         `;
         
