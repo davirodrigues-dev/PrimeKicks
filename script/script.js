@@ -38,7 +38,7 @@ function atualizarContadorCarrinho() {
     const contador = document.getElementById('cart-count');
     if (contador) {
         contador.innerText = carrinho.length;
-    }
+    };
 };
 
 function exibirTenis(lista = estoqueTenis) {
@@ -69,7 +69,7 @@ function exibirCarrinho() {
         container.innerHTML = '<p>Seu carrinho está vazio.</p>';
         if (totalElement) totalElement.innerText = 'R$ 0,00';
         return;
-    }
+    };
 
     container.innerHTML = '';
     let total = 0;
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (container) container.innerHTML = '<p>Nenhum tênis encontrado.</p>';
             }
         });
-    }
+    };
 
     document.getElementById('product-grid')?.addEventListener('click', function(e) {
         if (e.target.classList.contains('add-to-cart-btn')) {
@@ -122,8 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('carrinho', JSON.stringify(carrinho));
                 atualizarContadorCarrinho();
                 exibirCarrinho();
-            }
-        }
+            };
+        };
     });
 
     document.getElementById('clear-cart-btn')?.addEventListener('click', limparCarrinho);
@@ -145,13 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cadastroFinalizado) {
                 cadastroFinalizado.style.display = 'block';
                 cadastroFinalizado.innerText = `Cadastro realizado com sucesso! Bem-vindo, ${nome}. Redirecionando...`;
-            }
+            };
 
             setTimeout(() => {
                 window.location.href = 'carrinho.html';
             }, 2000);
         });
-    }
+    };
 });
 
 function limparCarrinho() {
@@ -181,9 +181,9 @@ function mostrarModalCadastro() {
             modal.style.display = 'none';
             window.location.href = 'cadastro.html';
         });
-    }
+    };
     modal.style.display = 'flex';
-}
+};
 
 function mostrarModalSucesso() {
     let modal = document.getElementById('modal-sucesso');
@@ -207,7 +207,7 @@ function mostrarModalSucesso() {
         document.getElementById('btn-fechar-modal').addEventListener('click', () => {
             modal.style.display = 'none';
         });
-    }
+    };
     
     modal.style.display = 'flex';
 };
@@ -217,13 +217,13 @@ function finalizarCompra() {
         const container = document.getElementById('cart-items');
         if (container) container.innerHTML = '<p>Seu carrinho está vazio. Adicione itens para finalizar a compra.</p>';
         return;
-    }
+    };
 
     const usuarioLogado = localStorage.getItem('usuarioLogado');
     if (!usuarioLogado) {
         mostrarModalCadastro();
         return;
-    }
+    };
 
     carrinho = [];
     localStorage.removeItem('carrinho');
@@ -240,6 +240,6 @@ function validaCadastro() {
     if (!nome || !email || !senha) {
         alert('Por favor, preencha todos os campos.');
         return false;
-    }
+    };
     return true;
-}
+};
